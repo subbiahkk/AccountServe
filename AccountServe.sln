@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountServe", "AccountServe\AccountServe.csproj", "{B897D1A9-DB10-4A4B-B86E-A6CE332FA296}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountsBAL", "AccountsBAL\AccountsBAL.csproj", "{037A817C-7D9F-4BE7-A365-A61233603960}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountsDAL", "AccountsDAL\AccountsDAL.csproj", "{0116FAA6-0C88-43F8-8951-EC5343F67C49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountEntities", "AccountEntities\AccountEntities.csproj", "{1C961742-9A7D-44DF-9F65-0FF5028E64AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B897D1A9-DB10-4A4B-B86E-A6CE332FA296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B897D1A9-DB10-4A4B-B86E-A6CE332FA296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B897D1A9-DB10-4A4B-B86E-A6CE332FA296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B897D1A9-DB10-4A4B-B86E-A6CE332FA296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{037A817C-7D9F-4BE7-A365-A61233603960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{037A817C-7D9F-4BE7-A365-A61233603960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{037A817C-7D9F-4BE7-A365-A61233603960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{037A817C-7D9F-4BE7-A365-A61233603960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0116FAA6-0C88-43F8-8951-EC5343F67C49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0116FAA6-0C88-43F8-8951-EC5343F67C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0116FAA6-0C88-43F8-8951-EC5343F67C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0116FAA6-0C88-43F8-8951-EC5343F67C49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C961742-9A7D-44DF-9F65-0FF5028E64AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C961742-9A7D-44DF-9F65-0FF5028E64AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C961742-9A7D-44DF-9F65-0FF5028E64AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C961742-9A7D-44DF-9F65-0FF5028E64AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

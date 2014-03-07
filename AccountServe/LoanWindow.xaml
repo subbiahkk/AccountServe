@@ -1,0 +1,181 @@
+﻿<Window xmlns:WpfToolkit="http://schemas.microsoft.com/wpf/2008/toolkit"  xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+    x:Class="AccountServe.LoanWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:AccountServe" 
+        Title="BuisnessWindow" Height="300" Width="300" WindowState="Maximized">
+    <Window.Resources>
+
+        <!--<CollectionViewSource x:Key="ItemCollectionViewSource" CollectionViewType="{x:Type ListCollectionView}"/>-->
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes\DataGrid.Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+
+    </Window.Resources>
+    <Window.Effect>
+        <DropShadowEffect/>
+    </Window.Effect>
+    <Grid>
+        <Grid Margin="0,0,0,0" x:Name="CustomerParent">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100px" />
+                <RowDefinition Height="50px" />
+                <RowDefinition Height="400" />
+                <RowDefinition Height="400" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <local:MenuControl x:Name="MainMenu" Grid.Row="0" Grid.Column="0"></local:MenuControl>
+            <Grid Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Border BorderThickness="0" BorderBrush="Black" Grid.Column="1">
+                    <StackPanel Background="#FFBFD6EE">
+
+                        <StackPanel   Orientation="Horizontal">
+                            <TextBlock Text="Name: " Margin="5" VerticalAlignment="Center" FontSize="16" />
+                            <Controls:AutoCompleteBox x:Name="txtAutoName" Width="228" >
+                                <Controls:AutoCompleteBox.Effect>
+                                    <DropShadowEffect/>
+                                </Controls:AutoCompleteBox.Effect>
+                            </Controls:AutoCompleteBox>
+
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <Border Margin="50,0,0,0" BorderThickness="0" BorderBrush="Black" Grid.Column="2">
+                    <StackPanel Background="#FFBFD6EE">
+
+                        <StackPanel  Orientation="Horizontal">
+                            <TextBlock Text="City: " Margin="5" VerticalAlignment="Center"  FontSize="16"/>
+                            <Controls:AutoCompleteBox x:Name="txtAutoCity" Width="228" >
+                                <Controls:AutoCompleteBox.Effect>
+                                    <DropShadowEffect/>
+                                </Controls:AutoCompleteBox.Effect>
+                            </Controls:AutoCompleteBox>
+
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Button x:Name="btnFind" Content="Find"  Margin="75,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Background="#FFBFD6EE" FontSize="18" Grid.Column="3"  Grid.Row="1" >
+                    <Button.Effect>
+                        <DropShadowEffect/>
+                    </Button.Effect>
+                </Button>
+
+                <Button x:Name="btnAdd" Content="Add" Click="Add_Click"  Margin="75,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Background="#FFBFD6EE" FontSize="18" Grid.Column="4"  Grid.Row="1" >
+                    <Button.Effect>
+                        <DropShadowEffect/>
+                    </Button.Effect>
+                </Button>
+
+            </Grid>
+            <WpfToolkit:DataGrid Grid.Row="2" Name="dgLoanMaster"  SelectionChanged="dgLoanMaster_SelectionChanged"
+                             
+            HorizontalScrollBarVisibility="Hidden" SelectionMode="Extended"
+        CanUserAddRows="False" CanUserDeleteRows="False"
+        CanUserResizeRows="False" CanUserSortColumns="True"
+		AutoGenerateColumns="False" CanUserResizeColumns="True"
+        RowHeaderWidth="17" RowHeight="25" Margin="20,0,20,0" MouseDoubleClick="dgLoanMaster_MouseDoubleClick"  >
+                <WpfToolkit:DataGrid.Effect>
+                    <DropShadowEffect/>
+                </WpfToolkit:DataGrid.Effect>
+
+                <WpfToolkit:DataGrid.ContextMenu>
+                    <ContextMenu >
+
+                        <!--<MenuItem Header="Edit Customer" Click="EditCustomer_Click"  />
+                        <MenuItem Header="Customer Details"   />-->
+
+                    </ContextMenu>
+
+                </WpfToolkit:DataGrid.ContextMenu>
+                <WpfToolkit:DataGrid.Columns>
+                    <WpfToolkit:DataGridCheckBoxColumn
+				Header="Active" Width=".5*"
+				Binding="{Binding Path=IsActive}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Bill Id" Width="1*"
+				Binding="{Binding Path=BillId}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Customer Name" Width="2*"
+				Binding="{Binding Path=Customer.Name}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Loan Amount" Width="1*"
+				Binding="{Binding Path=LoanAmount}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Total Grams" Width="1*"
+				Binding="{Binding Path=TotalGrams}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Nr Of Items" Width="1*"
+				Binding="{Binding Path=NrOfItems}" IsReadOnly="True"/>
+                   
+                   
+
+
+                </WpfToolkit:DataGrid.Columns>
+            </WpfToolkit:DataGrid>
+
+            <WpfToolkit:DataGrid Grid.Row="3" Name="dgLoanDetails" 
+                             
+            HorizontalScrollBarVisibility="Hidden" SelectionMode="Extended"
+        CanUserAddRows="False" CanUserDeleteRows="False"
+        CanUserResizeRows="False" CanUserSortColumns="True"
+		AutoGenerateColumns="False" CanUserResizeColumns="True"
+        RowHeaderWidth="17" RowHeight="25" Margin="20,0,20,0" MouseDoubleClick="dgLoanMaster_MouseDoubleClick"  >
+                <WpfToolkit:DataGrid.Effect>
+                    <DropShadowEffect/>
+                </WpfToolkit:DataGrid.Effect>
+
+                <WpfToolkit:DataGrid.ContextMenu>
+                    <ContextMenu >
+
+                        <!--<MenuItem Header="Edit Customer" Click="EditCustomer_Click"  />
+                        <MenuItem Header="Customer Details"   />-->
+
+                    </ContextMenu>
+
+                </WpfToolkit:DataGrid.ContextMenu>
+                <WpfToolkit:DataGrid.Columns>                   
+                    <WpfToolkit:DataGridTextColumn
+				Header="Bill Id" Width="1*"
+				Binding="{Binding Path=LoanMaster.BillId}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Customer Name" Width="2*"
+				Binding="{Binding Path=LoanMaster.Customer.Name}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Item" Width="1*"
+				Binding="{Binding Path=ItemDescription}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Gram" Width="1*"
+				Binding="{Binding Path=ItemGrams}" IsReadOnly="True"/>
+                   
+				
+
+
+
+
+                </WpfToolkit:DataGrid.Columns>
+            </WpfToolkit:DataGrid>
+
+
+
+        </Grid>
+        <local:LoanMasterPopupWindow x:Name="loanMasterDialog" />
+    </Grid>
+
+</Window>

@@ -1,0 +1,167 @@
+﻿<Window xmlns:WpfToolkit="http://schemas.microsoft.com/wpf/2008/toolkit"  xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:local="clr-namespace:AccountServe" 
+        xmlns:Controls1="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"  x:Class="AccountServe.CustomerWindow" 
+        Title="Account Serve"  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FontFamily="Times New Roman" WindowStartupLocation="CenterScreen" IsHitTestVisible="True" AllowDrop="True" IsTabStop="True" WindowState="Maximized">
+    <Window.Resources>
+        
+        <!--<CollectionViewSource x:Key="ItemCollectionViewSource" CollectionViewType="{x:Type ListCollectionView}"/>-->
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes\DataGrid.Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+        
+    </Window.Resources>
+    <Window.Effect>
+        <DropShadowEffect/>
+    </Window.Effect>
+    <Grid>
+        <Grid Margin="0,0,0,0" x:Name="CustomerParent">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100px" />
+                <RowDefinition Height="50px" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <local:MenuControl x:Name="MainMenu" Grid.Row="0" Grid.Column="0"></local:MenuControl>
+            <Grid Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Border BorderThickness="0" BorderBrush="Black" Grid.Column="1">
+                    <StackPanel Background="#FFBFD6EE">
+
+                        <StackPanel   Orientation="Horizontal">
+                            <TextBlock Text="Name: " Margin="5" VerticalAlignment="Center" FontSize="16" />
+                            <Controls:AutoCompleteBox x:Name="txtAutoName" Width="228" >
+                                <Controls:AutoCompleteBox.Effect>
+                                    <DropShadowEffect/>
+                                </Controls:AutoCompleteBox.Effect>
+                            </Controls:AutoCompleteBox>
+
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <Border Margin="50,0,0,0" BorderThickness="0" BorderBrush="Black" Grid.Column="2">
+                    <StackPanel Background="#FFBFD6EE">
+
+                        <StackPanel  Orientation="Horizontal">
+                            <TextBlock Text="City: " Margin="5" VerticalAlignment="Center"  FontSize="16"/>
+                            <Controls:AutoCompleteBox x:Name="txtAutoCity" Width="228" >
+                                <Controls:AutoCompleteBox.Effect>
+                                    <DropShadowEffect/>
+                                </Controls:AutoCompleteBox.Effect>
+                            </Controls:AutoCompleteBox>
+
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Button x:Name="btnFind" Content="Find"  Margin="75,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Background="#FFBFD6EE" FontSize="18" Grid.Column="3" Click="Search_Click" Grid.Row="1" >
+                    <Button.Effect>
+                        <DropShadowEffect/>
+                    </Button.Effect>
+                </Button>
+
+                <Button x:Name="btnAdd" Content="Add"  Margin="75,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Background="#FFBFD6EE" FontSize="18" Grid.Column="4" Click="Add_Click" Grid.Row="1" >
+                    <Button.Effect>
+                        <DropShadowEffect/>
+                    </Button.Effect>
+                </Button>
+
+            </Grid>
+            <WpfToolkit:DataGrid Grid.Row="2" Name="dgCustomer" 
+                             
+            HorizontalScrollBarVisibility="Hidden" SelectionMode="Extended"
+        CanUserAddRows="False" CanUserDeleteRows="False"
+        CanUserResizeRows="False" CanUserSortColumns="True"
+		AutoGenerateColumns="False" CanUserResizeColumns="True"
+        RowHeaderWidth="17" RowHeight="25" Margin="20,0,20,0" MouseDoubleClick="dgCustomer_MouseDoubleClick" >
+                <WpfToolkit:DataGrid.Effect>
+                    <DropShadowEffect/>
+                </WpfToolkit:DataGrid.Effect>
+                
+                <WpfToolkit:DataGrid.ContextMenu>
+                    <ContextMenu >
+
+                        <MenuItem Header="Edit Customer" Click="EditCustomer_Click"  />
+                        <MenuItem Header="Customer Details"   />
+
+                    </ContextMenu>
+
+                </WpfToolkit:DataGrid.ContextMenu>
+                <WpfToolkit:DataGrid.Columns>
+                    <WpfToolkit:DataGridCheckBoxColumn
+				Header="Active" Width=".5*"
+				Binding="{Binding Path=IsActive}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Customer Name" Width="2*"
+				Binding="{Binding Path=Name}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Alias" Width="1*"
+				Binding="{Binding Path=Alias}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Phone" Width="1*"
+				Binding="{Binding Path=Phone}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Mobile" Width="1*"
+				Binding="{Binding Path=Mobile}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="Email" Width="1*"
+				Binding="{Binding Path=Email}" IsReadOnly="True"/>
+                    <WpfToolkit:DataGridTextColumn
+				Header="City" Width="1*"
+				Binding="{Binding Path=City}" IsReadOnly="True"/>
+
+
+                </WpfToolkit:DataGrid.Columns>
+            </WpfToolkit:DataGrid>
+
+
+            <!--<DataGrid HorizontalAlignment="Right" Name="dgCustomer" Margin="200,0,0,0" VerticalAlignment="Top" Height="Auto" Width="Auto"  Grid.Row="2"
+                              DataContext="{StaticResource ItemCollectionViewSource}"
+    ItemsSource="{Binding}"  AutoGenerateColumns="False"
+    CanUserAddRows="False" AlternatingRowBackground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" AreRowDetailsFrozen="True" RowBackground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" SelectionMode="Single"  >
+            <DataGrid.Effect>
+                <DropShadowEffect/>
+            </DataGrid.Effect>
+            <DataGrid.ContextMenu>
+                <ContextMenu >
+                    -->
+            <!--<MenuItem Header="Edit Customer"  Click="EditCustomer_Click" />
+                    <MenuItem Header="Customer Details"  Click="EditCustomer_Click" />-->
+            <!--
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True"  Binding="{Binding Id}"  Header="Id" Visibility="Hidden" FontSize="16" FontFamily="Times New Roman" Width="200"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Name}" CanUserResize="True"  Header="Name" Width="280" Foreground="#FF37568D" FontSize="16" FontFamily="Times New Roman"/>
+                <DataGridTextColumn Binding="{Binding Alias}" ClipboardContentBinding="{x:Null}" Header="Alias"/>
+                <DataGridTextColumn Binding="{Binding Phone}" ClipboardContentBinding="{x:Null}" Header="Phone" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Mobile}" ClipboardContentBinding="{x:Null}" Header="Mobile" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Email}" ClipboardContentBinding="{x:Null}" Header="Email" Width="300"/>
+                <DataGridTextColumn Binding="{Binding City}" ClipboardContentBinding="{x:Null}" Header="City" Width="100"/>
+                <DataGridCheckBoxColumn Binding="{Binding IsActive}" ClipboardContentBinding="{x:Null}" Header="Active"/>
+            </DataGrid.Columns>
+
+        </DataGrid>-->
+
+
+        </Grid>
+        <local:CustomerPopupWindow x:Name="customerDialog" />
+    </Grid>
+   
+</Window>

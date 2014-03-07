@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>LinqToOdbc</id>
+    <version>1.0.0.6</version>
+    <title>LinqToOdbc</title>
+    <authors>Ken Courville</authors>
+    <owners>Ken Courville</owners>
+    <licenseUrl>http://linqtoodbc.codeplex.com/license</licenseUrl>
+    <projectUrl>http://linqtoodbc.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>LinqToOdbc seeks to simplify access to Odbc-based datasources via Linq queries.</description>
+    <summary>LinqToOdbc seeks to simplify access to Odbc-based datasources via Linq queries.</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
+    <tags>linq odbc</tags>
+    <dependencies>
+      <dependency id="Remotion.Linq" version="1.13.111" />
+    </dependencies>
+  </metadata>
+</package>
