@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
           xmlns:Custom="http://schemas.microsoft.com/wpf/2008/toolkit" x:Class="AccountServe.LoanMasterPopupWindow"
           xmlns:WpfToolkit="http://schemas.microsoft.com/wpf/2008/toolkit" 
+     xmlns:local="clr-namespace:AccountServe" 
           Height="Auto" Width="Auto">
     <UserControl.Resources>
 
@@ -29,7 +30,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+    
     </UserControl.Resources>
+    
+    
     <Grid>
         <Border Background="#90000000" Visibility="{Binding Visibility}">
             <Border BorderBrush="Black" BorderThickness="1" Background="AliceBlue" 
@@ -40,7 +44,13 @@
 						Opacity="0.5" Direction="270" 
 						ShadowDepth="0.7" />
                 </Border.BitmapEffect>
-                <Grid x:Name="grid_LoanData" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="200" />
+                    </Grid.RowDefinitions>
+                 
+                    <Grid x:Name="grid_LoanData" Grid.Row="0" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="300" />
@@ -54,18 +64,30 @@
                         <RowDefinition Height="40px" />
                         <RowDefinition Height="40px" />
                         <RowDefinition Height="40px" />
-                        <RowDefinition Height="40px" />
-                        <RowDefinition Height="80px" />
+                        <RowDefinition Height="60px" />                       
                       
                         
                        
                        
                     </Grid.RowDefinitions>
                     <Grid.CommandBindings>
-                        <CommandBinding Command="Save" CanExecute="Confirm_CanExecute" Executed="Confirm_Executed" />
-                    </Grid.CommandBindings>
+                        <CommandBinding Command="Save" CanExecute="Confirm_CanExecute" Executed="Confirm_Executed" />                          
+                        </Grid.CommandBindings>
 
-                    <Label  Content="Loan Information" Grid.Column="0" Grid.Row="0"   Foreground="Crimson" FontFamily="Times New Roman" FontSize="28" Grid.ColumnSpan="4" HorizontalAlignment="Center">
+
+                        <Button x:Name="btnSave"  Command="Save"  Content="Save"  Margin="-20,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="83" Background="#FFBFD6EE" FontSize="18" Grid.Column="3" Click="btnSave_Click" Grid.Row="0" >
+                            <Button.Effect>
+                                <DropShadowEffect/>
+                            </Button.Effect>
+                        </Button>
+
+                        <Button x:Name="btnCancel" Content="Cancel" Margin="160,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="83" Background="#FFBFD6EE" FontSize="18" Grid.Column="4" Click="btnCancel_Click" Grid.Row="0" >
+                            <Button.Effect>
+                                <DropShadowEffect/>
+                            </Button.Effect>
+                        </Button>
+
+                        <Label  Content="Loan Information" Grid.Column="0" Grid.Row="0"   Foreground="Crimson" FontFamily="Times New Roman" FontSize="28" Grid.ColumnSpan="4" HorizontalAlignment="Center">
                         <Label.OpacityMask>
                             <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                                 <GradientStop Color="Black" Offset="1"/>
@@ -257,18 +279,103 @@
                             <ImageBrush/>
                         </CheckBox.BorderBrush>
                     </CheckBox>
-                    <Button x:Name="btnSave"  Command="Save" Content="Save"  Margin="-20,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="83" Background="#FFBFD6EE" FontSize="18" Grid.Column="4" Click="btnSave_Click" Grid.Row="7" >
-                        <Button.Effect>
-                            <DropShadowEffect/>
-                        </Button.Effect>
-                    </Button>
+                        <Button Content="Add" Command="Save" x:Name="btnAddDetails" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Margin="-50,20,0,0" Click="btnAddDetails_Click"  Background="#FFBFD6EE" Foreground="Black" Height="24" Width="60" FontSize="14">
+                            <Button.Effect>
+                                <DropShadowEffect></DropShadowEffect>
+                            </Button.Effect>
+                            <!--<Button.Template>
+                                <ControlTemplate>
+                                    <Border HorizontalAlignment="Center"  VerticalAlignment="Center" >
+                                        <Image Source="Images\Add.Png" Height="32" Width="32"
+                            />
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>-->
+                        </Button>
 
-                    <Button x:Name="btnCancel" Content="Cancel" Margin="160,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="83" Background="#FFBFD6EE" FontSize="18" Grid.Column="4" Click="btnCancel_Click" Grid.Row="7" >
-                        <Button.Effect>
-                            <DropShadowEffect/>
-                        </Button.Effect>
-                    </Button>
+                        <Button Content="Remove" Command="Save" x:Name="btnDeleteDetails" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="3"  Margin="80,20,0,0" Click="btnDeleteDetails_Click" Background="#FFBFD6EE" Foreground="Black" Height="24" Width="60" FontSize="14">
+                            <Button.Effect>
+                                <DropShadowEffect></DropShadowEffect>
+                            </Button.Effect>
+                            <!--<button.template>
+                                <controltemplate>
+                                    <border horizontalalignment="center" verticalalignment="center" >
+                                        <image source="images\delete.png" height="32" width="32"
+                            />
+                                    </border>
+                                </controltemplate>
+                            </button.template>-->
+                        </Button>
+                        <Button  Background="#FFBFD6EE" Command="Save" Foreground="Black" Content="Save" x:Name="btnSaveDetails" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="3"  Margin="215,20,0,0" Click="btnSaveDetails_Click" Height="24" Width="60" FontSize="14">
+                            <Button.Effect>
+                                <DropShadowEffect></DropShadowEffect>
+                            </Button.Effect>
+                            
+                        </Button>
 
+                    </Grid>
+                    
+                    <Grid x:Name="grid_LoanDetails" Grid.Row="1">
+                        <WpfToolkit:DataGrid  Name="dgLoanDetails" 
+                             
+            HorizontalScrollBarVisibility="Hidden" SelectionMode="Extended"
+        CanUserAddRows="False" CanUserDeleteRows="False"
+        CanUserResizeRows="False" CanUserSortColumns="True"
+		AutoGenerateColumns="False" CanUserResizeColumns="True"
+        RowHeaderWidth="17" RowHeight="25" Margin="20,0,20,0"  >
+                            <WpfToolkit:DataGrid.Effect>
+                                <DropShadowEffect/>
+                            </WpfToolkit:DataGrid.Effect>
+
+                            <WpfToolkit:DataGrid.ContextMenu>
+                                <ContextMenu >
+
+                                    <!--<MenuItem Header="Edit Customer" Click="EditCustomer_Click"  />
+                        <MenuItem Header="Customer Details"   />-->
+
+                                </ContextMenu>
+
+                            </WpfToolkit:DataGrid.ContextMenu>
+
+                            <WpfToolkit:DataGrid.Resources>
+                                <Style TargetType="{x:Type WpfToolkit:DataGridCell}">
+                                    <Setter Property="TextBlock.ToolTip" Value="{Binding Error}" />
+                                </Style>
+                                <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
+                                    <Setter Property="Padding" Value="-2"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="Validation.HasError" Value="True" >
+                                            <!--<Setter Property="Background" Value="Red"/>-->
+                                            <Setter Property="ToolTip" 
+          Value="{Binding RelativeSource={RelativeSource Self},
+            Path=(Validation.Errors)[0].ErrorContent}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </WpfToolkit:DataGrid.Resources>
+                            <WpfToolkit:DataGrid.Columns>
+
+                                <WpfToolkit:DataGridTextColumn 
+				Header="Item" Width="500" EditingElementStyle="{StaticResource errorStyle}" 
+                                     
+				Binding="{Binding Path=ItemDescription,ValidatesOnExceptions=True,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" IsReadOnly="False"></WpfToolkit:DataGridTextColumn>
+                                <WpfToolkit:DataGridTextColumn
+				Header="Gram" Width="300"
+				Binding="{Binding Path=ItemGrams,ValidatesOnExceptions=True,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"  IsReadOnly="False"/>
+
+                               
+
+                                    <WpfToolkit:DataGridTextColumn
+				Header="Item" Width="300"
+				Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Hidden"/>
+
+
+
+
+                                </WpfToolkit:DataGrid.Columns>
+                        </WpfToolkit:DataGrid>
+
+                    </Grid>
                 </Grid>
             </Border>
         </Border>

@@ -14,6 +14,13 @@ namespace AccountEntities
             LoanMaster = new LoanMasterEntity();
         }
 
+        public LoanDetailsEntity(int loanID)
+        {
+            LoanMaster = new LoanMasterEntity();
+            this.LoanId = loanID;
+            LoanMaster.Id = loanID;
+        }
+
         private int _Id;
 
         public int Id
@@ -76,19 +83,31 @@ namespace AccountEntities
 
         public string Error
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                StringBuilder error = new StringBuilder();
+
+                // iterate over all of the properties
+                // of this object - aggregating any validation errors
+                PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
+                foreach (PropertyDescriptor prop in props)
+                {
+                    String propertyError = this[prop.Name];
+                    if (propertyError != string.Empty)
+                    {
+                        error.Append((error.Length != 0 ? ", " : "") + propertyError);
+                    }
+                }
+
+                return error.Length == 0 ? null : error.ToString();
+            }
         }
 
         public string this[string columnName]
         {
             get
             {
-                string result = null;
-                if (columnName == "LoanId")
-                {
-                    if (LoanId <= 0)
-                        result = "Please select Loan";
-                }
+                string result = null;                
                 if (columnName == "ItemGrams")
                 {
                     if (ItemGrams <= 0)

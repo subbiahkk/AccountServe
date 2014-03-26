@@ -27,14 +27,15 @@ namespace AccountServe
             this.Title = "Buisness";
             this.MainMenu.SetSelectedMenu(this.Title);
             LoadmasterData();
-            loanMasterDialog.SetParent(CustomerParent);
+            loanMasterDialog.SetParent(CustomerParent,this);
         }
 
-        void LoadmasterData()
+        public void LoadmasterData()
         {
-            dgLoanMaster.ItemsSource = LoanBAL.GetAll(1); ;
+            dgLoanMaster.ItemsSource = LoanBAL.GetAll(1) ;
             var namelist = CustomerBAL.GetAllLookupValues("Name");           
             txtAutoName.ItemsSource = namelist;
+            dgLoanMaster.SelectedIndex = 0;
             
         }
 

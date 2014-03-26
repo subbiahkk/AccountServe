@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,7 +64,7 @@ namespace AccountsDAL
             return loans;
         }
 
-        public static bool Save(LoanMasterEntity loanMaster)
+        public static bool SaveMaster(LoanMasterEntity loanMaster)
         {
             string query = string.Empty;
             if (loanMaster.Id == 0)
@@ -116,10 +117,10 @@ namespace AccountsDAL
 
         #region Loan Details
 
-        public static List<LoanDetailsEntity> GetLoanDetails(Int32 loanID)
+        public static ObservableCollection<LoanDetailsEntity> GetLoanDetails(Int32 loanID)
         {
 
-            List<LoanDetailsEntity> loanDetails = new List<LoanDetailsEntity>();
+            ObservableCollection<LoanDetailsEntity> loanDetails = new ObservableCollection<LoanDetailsEntity>();
             try
             {
                 StringBuilder sbQuery = new StringBuilder();
@@ -159,6 +160,71 @@ namespace AccountsDAL
                 throw ex;
             }
             return loanDetails;
+        }
+
+
+
+
+        public static bool SaveDetails(LoanDetailsEntity loanDetails)
+        {
+            string query = string.Empty;
+            if (loanDetails.Id == 0)
+            {
+                query = string.Format("Insert into loandetails(LoanId,ItemDescription,ItemGrams,CreatedDt,ModifiedDt) " +
+               " values({0},'{1}',{2},'{3}','{4}')",
+               loanDetails.LoanMaster.Id,
+               loanDetails.ItemDescription,
+               loanDetails.ItemGrams,              
+               DateTime.Now.ToString("yyyy/MM/dd"),
+               DateTime.Now.ToString("yyyy/MM/dd")              
+               );
+            }
+            else
+            {
+                query = string.Format("Update loandetails set ItemDescription = '{0}', ItemGrams = {1},  ModifiedDt = '{2}' where Id = {3} ",
+              loanDetails.ItemDescription,
+               loanDetails.ItemGrams,               
+               DateTime.Now.ToString("yyyy/MM/dd"),
+               loanDetails.Id
+              );
+            }
+
+            try
+            {
+                AdoHelper db = new AdoHelper();
+                int result = db.ExecNonQuery(query, null);
+                db.Dispose();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public static bool RemoveDetail(LoanDetailsEntity loanDetails)
+        {
+            string query = string.Empty;
+            //if (loanDetails.Id == 0)
+            {
+                query = string.Format("Delete from loandetails  " +
+               " where Id ={0}",
+               loanDetails.Id              
+               );
+            }
+            try
+            {
+                AdoHelper db = new AdoHelper();
+                int result = db.ExecNonQuery(query, null);
+                db.Dispose();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         #endregion

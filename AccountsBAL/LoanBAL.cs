@@ -1,5 +1,6 @@
 ﻿using AccountEntities;
 using AccountsDAL;
+using System.Collections.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace AccountsBAL
         {
             try
             {
-                return LoanDAL.Save(loanMasterEntity);
+                return LoanDAL.SaveMaster(loanMasterEntity);
             }
             catch (Exception ex)
             {
@@ -36,11 +37,42 @@ namespace AccountsBAL
         }
 
 
-        public static List<LoanDetailsEntity> GetLoanDetails(Int32 loanId)
+        public static ObservableCollection<LoanDetailsEntity> GetLoanDetails(Int32 loanId)
         {
             try
             {
                 return LoanDAL.GetLoanDetails(loanId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool SaveLoanDetails(ObservableCollection<LoanDetailsEntity> loanDetails)
+        {
+            try
+            {
+                foreach(LoanDetailsEntity loanDetail in loanDetails)
+                {
+                    LoanDAL.SaveDetails(loanDetail);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool RemoveLoanDetails(LoanDetailsEntity loanDetail)
+        {
+            try
+            {
+
+                return LoanDAL.RemoveDetail(loanDetail);
+               
+                 
             }
             catch (Exception ex)
             {

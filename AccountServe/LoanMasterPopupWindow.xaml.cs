@@ -2,6 +2,7 @@
 using AccountsBAL;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -28,14 +29,31 @@ namespace AccountServe
         {
             InitializeComponent();
             Visibility = Visibility.Hidden;
-            BindLoanMaster();
+           // BindLoanMaster();
+            dgLoanDetails.RowEditEnding += dgLoanDetails_RowEditEnding;
+            dgLoanDetails.CellEditEnding += dgLoanDetails_CellEditEnding;
+            
+        }
+
+        void dgLoanDetails_CellEditEnding(object sender, Microsoft.Windows.Controls.DataGridCellEditEndingEventArgs e)
+        {
+            
+        }
+
+        void dgLoanDetails_RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
+        {
+            
         }
 
         LoanMasterEntity _LoanMasterEntity = new LoanMasterEntity();
         private int _errors = 0;
+        private int _errorsDetails = 0;
         private bool _hideRequest = false;
         private bool _result = false;
         private UIElement _parent;
+        private ObservableCollection<LoanDetailsEntity> LoanDetails;
+        private LoanWindow _LoanWindow;
+
 
         void LoadCustomerDetails()
         {
@@ -45,6 +63,18 @@ namespace AccountServe
             
         }
 
+        public void LoadDetailsData(int loanMasterID)
+        {
+            if (loanMasterID != 0)
+            { LoanDetails = LoanBAL.GetLoanDetails(loanMasterID); }
+            else
+            {
+                LoanDetails = new ObservableCollection<LoanDetailsEntity>();
+            }
+                
+            dgLoanDetails.ItemsSource = LoanDetails;
+
+        }
 
         void BindLoanMaster()
         {
@@ -54,6 +84,7 @@ namespace AccountServe
             if (_LoanMasterEntity != null)
             {
                 LoadCustomerDetails();
+                cbCustomer.SelectedValue = _LoanMasterEntity.Customer.Id;
                 dtBill.DisplayDate = _LoanMasterEntity.BillDt;
                 dtBill.Text = _LoanMasterEntity.BillDt.ToString();
                 chkActive.IsChecked = _LoanMasterEntity.IsActive;
@@ -62,6 +93,7 @@ namespace AccountServe
                 txtLoanAmount.Text = _LoanMasterEntity.LoanAmount != 0 ? _LoanMasterEntity.LoanAmount.ToString() : "";
                 txtNrofItems.Text = _LoanMasterEntity.NrOfItems != 0 ? _LoanMasterEntity.NrOfItems.ToString() : "";
                 txtNotes.Selection.Text = _LoanMasterEntity.Notes != null ? _LoanMasterEntity.Notes : "";
+               
             }
             else
             {
@@ -101,7 +133,7 @@ namespace AccountServe
         {
             //SaveCustomer();
             SaveLoanMaster();
-            HideHandlerDialog();
+            //HideHandlerDialog();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -116,6 +148,7 @@ namespace AccountServe
             Visibility = Visibility.Visible;
             this._LoanMasterEntity = loanMasterEntity;
             BindLoanMaster();
+            LoadDetailsData(_LoanMasterEntity.Id);
             _parent.IsEnabled = false;
 
             _hideRequest = false;
@@ -138,9 +171,10 @@ namespace AccountServe
 
         }
 
-        public void SetParent(UIElement parent)
+        public void SetParent(UIElement parent, LoanWindow loanWindow)
         {
             _parent = parent;
+            _LoanWindow = loanWindow;
         }
 
         private void HideHandlerDialog()
@@ -148,6 +182,7 @@ namespace AccountServe
             _hideRequest = true;
             Visibility = Visibility.Hidden;
             _parent.IsEnabled = true;
+            _LoanWindow.LoadmasterData();
         }
 
         #region Validation Events
@@ -173,11 +208,12 @@ namespace AccountServe
         private void Confirm_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             //Employee emp = grid_EmployeeData.DataContext as Employee;            
-            _LoanMasterEntity = new LoanMasterEntity();
-            grid_LoanData.DataContext = _LoanMasterEntity;
+            //_LoanMasterEntity = new LoanMasterEntity();
+            //grid_LoanData.DataContext = _LoanMasterEntity;
             e.Handled = true;
         }
 
+      
         private void Validation_Error(object sender, ValidationErrorEventArgs e)
         {
             if (e.Action == ValidationErrorEventAction.Added)
@@ -185,8 +221,69 @@ namespace AccountServe
             else
                 _errors--;
         }
+        
+
         #endregion
+
+        private void btnAddDetails_Click(object sender, RoutedEventArgs e)
+        {
+            if (LoanDetails.Last().ItemDescription != null && LoanDetails.Last().ItemGrams > 0)
+            {
+                LoanDetails.Add(new LoanDetailsEntity(_LoanMasterEntity.Id));
+            }
+           
+         
+        }
+
+        private void btnDeleteDetails_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgLoanDetails.SelectedItem != null)
+            {
+                LoanDetailsEntity loaDetailEntity = (LoanDetailsEntity)dgLoanDetails.SelectedItem;
+                if (loaDetailEntity.Id == 0)
+                { LoanDetails.Remove((LoanDetailsEntity)dgLoanDetails.SelectedItem); }
+                else
+                {
+                    if (MessageBox.Show("Do you want to remove this item?",
+  "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        LoanBAL.RemoveLoanDetails(loaDetailEntity);
+                        LoadDetailsData(loaDetailEntity.LoanMaster.Id);
+                    }
+                    else
+                    {
+                        // Do not close the window
+                    } 
+                }
+                
+            }
+        }
+
+        private void btnSaveDetails_Click(object sender, RoutedEventArgs e)
+        {
+            LoanBAL.SaveLoanDetails(LoanDetails);
+            HideHandlerDialog();
+        }
 
        
     }
+
+
+    //public static class CommandLibrary
+    //{
+    //    private static RoutedUICommand add = new RoutedUICommand("Add", "Add", typeof(CommandLibrary));
+
+    //    private static RoutedUICommand remove = new RoutedUICommand("Remove", "Remove", typeof(CommandLibrary));
+
+    //    public static RoutedUICommand AddListItem
+    //    {
+    //        get { return add; }
+    //    }
+
+    //    public static RoutedUICommand RemoveListItem
+    //    {
+    //        get { return remove; }
+    //    }
+
+    //}
 }
